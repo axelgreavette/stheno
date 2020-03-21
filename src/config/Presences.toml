@@ -1,0 +1,12 @@
+# Types of Presence:
+# Type 0 = PLAYING
+# Type 1 = LISTENING
+# Type 2 = WATCHING
+
+Valid = [
+    { type = 0, title = "Monegreen" },
+    { type = 0, title = "Cards Against Humanity" },
+    { type = 1, title = "Childish Gambino" },
+    { type = 0, title = "with Medusa" },
+    { type = 1, title = "the Siren's song" }
+]

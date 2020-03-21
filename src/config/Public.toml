@@ -1,0 +1,7 @@
+[bot]
+    prefix = "s$"
+    admins = [
+        "228872946557386752"
+    ]
+    
+debug = true

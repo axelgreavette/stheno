@@ -1,0 +1,104 @@
+const { Client, Collection } = require("discord.js");
+const { join } = require("path");
+const { readdirSync } = require("fs");
+const { js } = require("js-beautify");
+const NekoClient = require("nekos.life")
+
+const Config = require("../helper/Config");
+
+const { repository } = require("../../package.json");
+
+const BotUtils = require("../util/Bot");
+const ArrayUtils = require("../util/Array");
+const StringUtils = require("../util/String");
+
+class SthenoClient extends Client {
+    constructor(props) {
+        super(props);
+        
+        this.configs = {
+            Confidential: new Config(join(__dirname, "..", "config", "Confidential.toml")),
+            Public: new Config(join(__dirname, "..", "config", "Public.toml")),
+            Categories: new Config(join(__dirname, "..", "config", "Categories.toml")),
+            Messages: new Config(join(__dirname, "..", "config", "Messages.toml")),
+            Presences: new Config(join(__dirname, "..", "config", "Presences.toml"))
+        }
+
+        this.commandsFolder = join(__dirname, "..", "commands");
+        this.commands = new Collection();
+        this.cooldowns = new Collection();
+        const Commands = readdirSync(this.commandsFolder).filter(file => file.endsWith(".js"));
+        
+        this.prefixes = {
+            global: this.configs.Public.bot.prefix,
+        };
+
+
+        this.giveaways = new Collection();
+
+        for (const File of Commands) {
+            const cmd = require(`../commands/${File}`);
+
+            if(!this.configs.Categories.Valid.includes(cmd.category.toUpperCase())) throw new Error(`Command category must match one of ${this.configs.Categories.Valid}. Got ${cmd.category} instead.`)
+
+            this.commands.set(cmd.name, cmd);
+        }
+
+        this.github = repository;
+
+        const { sfw , nsfw } = new NekoClient();
+
+        this.nekos = sfw;
+        this.NSFW_nekos = nsfw;
+
+        this.utils = {
+            string: StringUtils,
+            bot: BotUtils,
+            array: ArrayUtils
+        };
+
+        this._presence = {
+            activities: this.configs.Presences.Valid,
+            random: () => {
+                return ArrayUtils.randomItem(this._presence.activities);
+            }
+        };
+    }
+
+    /**
+     * Finds a member from a string, mention, or id
+     * @property {string} msg The message to process
+     * @property {string} suffix The username to search for
+     * @property {bool} self Whether or not to default to yourself if no results are returned. Defaults to false.
+     */
+    findMember (msg, suffix, self = false) {
+        if (!suffix) {
+            if (self) return msg.member;
+            else return null;
+        } else {
+            let member = msg.mentions.members.first() || msg.guild.cache.members.get(suffix) || msg.guild.cache.members.find(m => m.displayName.toLowerCase().includes(suffix.toLowerCase()) || m.user.username.toLowerCase().includes(suffix.toLowerCase()));
+            return member;
+        }
+    }
+
+    /**
+     * Replaces certain characters and fixes mentions in messages.
+     * @property {string} text The text to clean
+     */
+    clean (text) {
+        let cleanRegex = new RegExp(this.configs.Confidential.token, "g");
+
+        if (text.indexOf(this.configs.Confidential.token) !== -1) text = text.replace(cleanRegex, ArrayUtils.randomItem(["[redacted]", "[DATA EXPUNGED]", "[REMOVED]", "[SEE APPENDIUM INDEX A494-A]"]));
+        
+        if (typeof (text) === "string") text = text.replace(/` /g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
+
+        text = js(text, {
+            indent_size: 4,
+            space_in_empty_paren: true
+        });
+        
+        return text;
+    }
+}
+
+module.exports = SthenoClient;
