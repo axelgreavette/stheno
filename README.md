@@ -1,4 +1,4 @@
-<div style="text-align:center; padding: 10px">
+<div style="text-align:center; padding: 10px" align="center">
     <img src="./public/logo.png" ondragstart="return false;" />
     <br/>
     <img alt="GitHub issues" src="https://img.shields.io/github/issues/axelgreavette/stheno?style=flat-square" />
