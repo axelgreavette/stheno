@@ -1,5 +1,6 @@
 Valid = [
     "ADMINISTRATIVE",
     "FUN",
-    "UTILITY"
+    "UTILITY",
+    "INFORMATION"
 ]

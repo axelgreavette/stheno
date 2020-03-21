@@ -1,6 +1,6 @@
 const { Client, Collection } = require("discord.js");
 const { join } = require("path");
-const { readdirSync } = require("fs");
+const { readdirSync, statSync } = require("fs");
 const { js } = require("js-beautify");
 const NekoClient = require("nekos.life")
 
@@ -27,8 +27,15 @@ class SthenoClient extends Client {
         this.commandsFolder = join(__dirname, "..", "commands");
         this.commands = new Collection();
         this.cooldowns = new Collection();
-        const Commands = readdirSync(this.commandsFolder).filter(file => file.endsWith(".js"));
-        
+        let Commands = []
+
+        const getDirectories = srcPath => readdirSync(srcPath).filter(file => statSync(join(srcPath, file)).isDirectory())
+
+        getDirectories(this.commandsFolder).forEach(d => {
+            let commands = readdirSync(join(this.commandsFolder, d)).filter(file => file.endsWith(".js")).map(path => `${d}/${path}`);
+            Commands = Commands.concat(...commands);
+        });
+
         this.prefixes = {
             global: this.configs.Public.bot.prefix,
         };
@@ -41,6 +48,7 @@ class SthenoClient extends Client {
 
             if(!this.configs.Categories.Valid.includes(cmd.category.toUpperCase())) throw new Error(`Command category must match one of ${this.configs.Categories.Valid}. Got ${cmd.category} instead.`)
 
+            cmd.ABSOLUTE_PATH = File;
             this.commands.set(cmd.name, cmd);
         }
 
