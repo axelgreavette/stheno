@@ -17,7 +17,7 @@ module.exports = {
         const commits = res.slice(0, 10);
 
         const embed = new MessageEmbed()
-            .setTitle("[stheno:master] Latest 10 commits")
+            .setTitle("[stheno:master] Latest Commits")
             .setColor("36393f")
             .setURL(client.github)
             .setDescription(
