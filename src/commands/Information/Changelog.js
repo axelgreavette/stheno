@@ -3,7 +3,7 @@ const axios = require("axios");
 
 module.exports = {
     name: "changelog",
-    aliases: ["updates", "commits", "update"],
+    aliases: ["updates", "commits", "update", "cl"],
     description: "Responds with Stheno's ten most recent Git commits.",
     category: "Information",
     async execute(message, args, client, logger) {
@@ -23,7 +23,7 @@ module.exports = {
             .setDescription(
                 commits.map(commit => {
                     const hash = `[\`${commit.sha.slice(0, 7)}\`](${commit.html_url})`;
-                    return `${hash} ${client.utils.string.shorten(commit.commit.message.split("\n")[0], 50)} - ${commit.author.login}`;
+                    return `${hash} - ${commit.author.login} - ${client.utils.string.shorten(commit.commit.message.split("\n")[0], 50)}`;
                 }).join("\n")
             )
             .setFooter(`Code last updated ${new Date(commits[0].commit.author.date).toLocaleDateString("en-CA", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`)
