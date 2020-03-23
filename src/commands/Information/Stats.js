@@ -13,7 +13,7 @@ module.exports = {
             url: "https://api.github.com/repos/axelgreavette/stheno/commits",
             method: "get",
             headers: {
-                "User-Agent": "stheno"
+                "User-Agent": "Stheno"
             }
         });
 

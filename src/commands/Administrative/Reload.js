@@ -26,14 +26,13 @@ module.exports = {
                 client.commands.set(cmd.name, cmd);
             });
 
-            progress.edit(`Successfully reloaded ${toReload.length} command${toReload.length > 1 ? "s" : ""}.`);
-
+            return progress.edit(`Successfully reloaded ${toReload.length} command${toReload.length > 1 ? "s" : ""}.`);
         } else {
             let name = args[0].replace(/^\w/, c => c.toUpperCase());
             
             let command = client.commands.get(args[0]);
 
-            if (!command) return message.channel.send(`That command couldn't be found within my processes. Try loading it with **s$load ${args[0]}**`);
+            if (!command) return message.channel.send(`That command couldn't be found within my processes. Try loading it with \`s$load ${args[0]}\``);
 
             delete require.cache[require.resolve(`../${command.ABSOLUTE_PATH}`)];
             client.commands.delete(command.name);
@@ -45,7 +44,7 @@ module.exports = {
             cmd.ABSOLUTE_PATH = command.ABSOLUTE_PATH;
             client.commands.set(cmd.name, cmd);
 
-            message.channel.send(`Successfully reloaded \`${cmd.name}\`.`);
+            return message.channel.send(`Successfully reloaded \`${cmd.name}\`.`);
         }
     }
 }

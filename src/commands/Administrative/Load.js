@@ -25,14 +25,14 @@ module.exports = {
                 const cmd = require(`../${c}`);
                 
                 if(client.commands.get(cmd.name)) return;
-                if (!client.configs.Categories.Valid.includes(cmd.category.toUpperCase())) message.channel.send(`${cmd.name}'s category must match one of ${client.configs.Categories.Valid}. Got ${cmd.category} instead.`);
+                if (!client.configs.Categories.Valid.includes(cmd.category.toUpperCase())) return message.channel.send(`${cmd.name}'s category must match one of ${client.configs.Categories.Valid}. Got ${cmd.category} instead.`);
                 
                 cmd.ABSOLUTE_PATH = c;
                 client.commands.set(cmd.name, cmd);
                 newCommands++;
             });
 
-            progress.edit(`Successfully loaded ${newCommands} new command${newCommands > 1 ? "s" : ""}.`);
+            return progress.edit(`Successfully loaded ${newCommands} new command${newCommands > 1 ? "s" : ""}.`);
 
         } else {
             let name = args[0].replace(/^\w/, c => c.toUpperCase());
@@ -55,7 +55,7 @@ module.exports = {
             cmd.ABSOLUTE_PATH = path;
             client.commands.set(cmd.name, cmd);
 
-            message.channel.send(`Successfully loaded \`${cmd.name}\`.`);
+            return message.channel.send(`Successfully loaded \`${cmd.name}\`.`);
         }
     }
 }
