@@ -1,3 +1,6 @@
+const { readdirSync, statSync } = require("fs");
+const { join } = require("path");
+
 /**
  * Humanizes the bot's uptime
  * @returns {object} An object containing a formatted time-string and a humanized time string
@@ -40,6 +43,20 @@ function uptime() {
      return timestr;
 }
 
+/**
+ * Scrapes a supplied directory and returns recursive directories and files within.
+ * @param {File Path} srcPath The directory to scrape.
+ */
+const getDirectories = srcPath => readdirSync(srcPath).filter(file => statSync(join(srcPath, file)).isDirectory())
+
+/**
+ * Converts a Discord snowflake to a valid timestamp.
+ * @param {Snowflake} sf The snowflake
+ */
+const snowflake = sf => new Date((sf * Math.pow(2, -22)) + 1420070400000).toLocaleDateString();
+
 module.exports = {
-    uptime
+    uptime,
+    getDirectories,
+    snowflake
 }

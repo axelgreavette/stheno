@@ -16,6 +16,8 @@ class SthenoClient extends Client {
     constructor(props) {
         super(props);
         
+        this.InviteURL = "https://discordapp.com/oauth2/authorize?client_id=686685370473382014&permissions=8&scope=bot";
+
         this.configs = {
             Confidential: new Config(join(__dirname, "..", "config", "Confidential.toml")),
             Public: new Config(join(__dirname, "..", "config", "Public.toml")),
@@ -24,14 +26,18 @@ class SthenoClient extends Client {
             Presences: new Config(join(__dirname, "..", "config", "Presences.toml"))
         }
 
+        this.utils = {
+            string: StringUtils,
+            bot: BotUtils,
+            array: ArrayUtils
+        };
+
         this.commandsFolder = join(__dirname, "..", "commands");
         this.commands = new Collection();
         this.cooldowns = new Collection();
         let Commands = []
 
-        const getDirectories = srcPath => readdirSync(srcPath).filter(file => statSync(join(srcPath, file)).isDirectory())
-
-        getDirectories(this.commandsFolder).forEach(d => {
+        this.utils.bot.getDirectories(this.commandsFolder).forEach(d => {
             let commands = readdirSync(join(this.commandsFolder, d)).filter(file => file.endsWith(".js")).map(path => `${d}/${path}`);
             Commands = Commands.concat(...commands);
         });
@@ -40,13 +46,12 @@ class SthenoClient extends Client {
             global: this.configs.Public.bot.prefix,
         };
 
-
         this.giveaways = new Collection();
 
         for (const File of Commands) {
             const cmd = require(`../commands/${File}`);
 
-            if(!this.configs.Categories.Valid.includes(cmd.category.toUpperCase())) throw new Error(`Command category must match one of ${this.configs.Categories.Valid}. Got ${cmd.category} instead.`)
+            if(!this.configs.Categories.Valid.includes(cmd.category.toUpperCase())) throw new Error(`Command category must match one of ${this.configs.Categories.Valid}. Got ${cmd.category} instead.`);
 
             cmd.ABSOLUTE_PATH = File;
             this.commands.set(cmd.name, cmd);
@@ -58,12 +63,6 @@ class SthenoClient extends Client {
 
         this.nekos = sfw;
         this.NSFW_nekos = nsfw;
-
-        this.utils = {
-            string: StringUtils,
-            bot: BotUtils,
-            array: ArrayUtils
-        };
 
         this._presence = {
             activities: this.configs.Presences.Valid,
@@ -84,7 +83,7 @@ class SthenoClient extends Client {
             if (self) return msg.member;
             else return null;
         } else {
-            let member = msg.mentions.members.first() || msg.guild.cache.members.get(suffix) || msg.guild.cache.members.find(m => m.displayName.toLowerCase().includes(suffix.toLowerCase()) || m.user.username.toLowerCase().includes(suffix.toLowerCase()));
+            let member = msg.mentions.members.first() || msg.guild.members.cache.get(suffix) || msg.guild.members.cache.find(m => m.displayName.toLowerCase().includes(suffix.toLowerCase()) || m.user.username.toLowerCase().includes(suffix.toLowerCase()));
             return member;
         }
     }
