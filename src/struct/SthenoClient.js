@@ -11,6 +11,7 @@ const { repository } = require("../../package.json");
 const BotUtils = require("../util/Bot");
 const ArrayUtils = require("../util/Array");
 const StringUtils = require("../util/String");
+const NumberUtils = require("../util/Number");
 
 class SthenoClient extends Client {
     constructor(props) {
@@ -29,11 +30,14 @@ class SthenoClient extends Client {
         this.utils = {
             string: StringUtils,
             bot: BotUtils,
-            array: ArrayUtils
+            array: ArrayUtils,
+            number: NumberUtils
         };
 
         this.commandsFolder = join(__dirname, "..", "commands");
         this.commands = new Collection();
+        this.autoCommands = new Collection();
+        this.autoPatterns = [];
         this.cooldowns = new Collection();
         let Commands = []
 
@@ -50,6 +54,15 @@ class SthenoClient extends Client {
 
         for (const File of Commands) {
             const cmd = require(`../commands/${File}`);
+
+            if(cmd.auto && cmd.patterns) {
+                cmd.patterns.forEach(p => {
+                    this.autoCommands.set(p, cmd);
+                    this.autoPatterns.push(p);
+                });
+                cmd.ABSOLUTE_PATH = File;
+                this.commands.set(cmd.name, cmd);
+            }
 
             if(!this.configs.Categories.Valid.includes(cmd.category.toUpperCase())) throw new Error(`Command category must match one of ${this.configs.Categories.Valid}. Got ${cmd.category} instead.`);
 

@@ -1,11 +1,9 @@
-//TODO: Update for Discord.js V12.0.1
-
 const Discord = require("discord.js");
 const sh0danClient = require("./struct/SthenoClient.js");
 const { version, dependencies } = require("../package.json");
 const winston = require("winston");
 const chalk = require("chalk");
-const moment = require("moment");
+const ms = require("ms");
 
 const escapeRegex = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
@@ -47,13 +45,25 @@ client.once("ready", async () => {
 });
 
 client.on("message", async message => {
-
+    let match;
+    for (const pattern of client.autoPatterns) {
+        if (message.content.match(pattern) && !message.content.startsWith(client.prefixes.global)) {
+            match = pattern;
+            break;
+        }
+    }
+    
     const prefixRegex = new RegExp(`^(<@!?${client.user.id}>|${escapeRegex(client.prefixes.global)}|${escapeRegex(client.prefixes.global.toUpperCase())})`);
-    if (!prefixRegex.test(message.content) || message.author.bot) return;
+    if (!match && !prefixRegex.test(message.content) || message.author.bot) return;
+    if (match) {
+        let auto_args = message.content.trim().split(/ +/);
+        return client.autoCommands.get(match).executeAuto(message, auto_args, client);
+    }
 
     const [, prefix] = message.content.match(prefixRegex);
     const args = message.content.slice(prefix.length).trim().split(/ +/);
     if (args.length === 0 || args[0] === "") return;
+
     const commandName = args.shift().toLowerCase();
 
     const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
@@ -86,7 +96,7 @@ client.on("message", async message => {
 
         if (now < expiration) {
             const timeLeft = (expiration - now) / 1000;
-            return message.reply(`${message.channel.type === "dm" ? "T" : ", t"}hat command (**${command.name}**) is unusable for another ${moment("2015-01-01").startOf("day").seconds(timeLeft).format("h m s")}. Please be patient.`);
+            return message.reply(`${message.channel.type === "dm" ? "T" : ", t"}hat command (**${command.name}**) is unusable for another ${ms(timeLeft)}. Please be patient.`);
         }
     }
 

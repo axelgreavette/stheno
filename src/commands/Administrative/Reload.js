@@ -1,5 +1,5 @@
 const { join } = require("path");
-const { readdirSync } = require("fs");
+const { performance } = require("perf_hooks")
 
 module.exports = {
     name: "reload",
@@ -8,8 +8,10 @@ module.exports = {
     args: true,
     aliases: ["rl"],
     adminOnly: true,
-    async execute(message, args, client, logger) {
+    async execute(message, args, client) {
         if(args[0].toLowerCase() == "all" || args[0].toLowerCase() == "a") {
+            let start = performance.now();
+
             let progress = await message.channel.send("Sweeping Commands...");
 
             let toReload = client.commands.array();
@@ -25,10 +27,12 @@ module.exports = {
                 cmd.ABSOLUTE_PATH = c.ABSOLUTE_PATH;
                 client.commands.set(cmd.name, cmd);
             });
+ 
+            let stop = performance.now();
 
-            return progress.edit(`Successfully reloaded ${toReload.length} command${toReload.length > 1 ? "s" : ""}.`);
+            return progress.edit(`Done. Reloaded ${toReload.length} command${toReload.length > 1 ? "s" : ""} in ${(stop - start).toFixed(2)} ms. It's recommended you run \`s$rebuild_auto\` now.`);
         } else {
-            let name = args[0].replace(/^\w/, c => c.toUpperCase());
+            let name = client.utils.string.capitalize(args[0]);
             
             let command = client.commands.get(args[0]);
 
@@ -44,7 +48,7 @@ module.exports = {
             cmd.ABSOLUTE_PATH = command.ABSOLUTE_PATH;
             client.commands.set(cmd.name, cmd);
 
-            return message.channel.send(`Successfully reloaded \`${cmd.name}\`.`);
+            return message.channel.send(`Successfully reloaded \`${cmd.name}\`. It's recommended you run \`s$rebuild_auto\` now.`);
         }
     }
 }

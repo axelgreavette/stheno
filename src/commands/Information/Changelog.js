@@ -6,7 +6,7 @@ module.exports = {
     aliases: ["updates", "commits", "update", "cl"],
     description: "Responds with Stheno's ten most recent Git commits.",
     category: "Information",
-    async execute(message, args, client, logger) {
+    async execute(message, args, client) {
         const { data: res } = await axios({
             url: "https://api.github.com/repos/axelgreavette/stheno/commits",
             headers: {
@@ -18,7 +18,7 @@ module.exports = {
 
         const embed = new MessageEmbed()
             .setTitle("[stheno:master] Latest Commits")
-            .setColor("36393f")
+            .setColor("2f3136")
             .setURL(client.github)
             .setDescription(
                 commits.map(commit => {
