@@ -4,6 +4,7 @@ module.exports = {
     name: "user",
     description: "Display user information.",
     category: "Information",
+    usage: "<?user>",
     async execute(message, args, client) {
         let conjoined = args.join(" ");
         let person = client.findMember(message, conjoined, true);

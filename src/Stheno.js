@@ -57,7 +57,9 @@ client.on("message", async message => {
     if (!match && !prefixRegex.test(message.content) || message.author.bot) return;
     if (match) {
         let auto_args = message.content.trim().split(/ +/);
-        return client.autoCommands.get(match).executeAuto(message, auto_args, client);
+        let command = client.autoCommands.get(match);
+        if(command.disabled) return;
+        return command.executeAuto(message, auto_args, client);
     }
 
     const [, prefix] = message.content.match(prefixRegex);

@@ -6,6 +6,7 @@ module.exports = {
     description: "Queries the MSNMACM API.",
     category: "Search",
     auto: true,
+    usage: "<query|list>",
     patterns: [/https?:\/\/msnmacm\.org\/_\d\d?/i, /msnmacm\.org\/_\d\d?/i, /msnmacm:\/\/\d\d?/i],
     credits: [
         {
@@ -25,7 +26,7 @@ module.exports = {
         if(res.error == "not found") return message.channel.send("Sorry, that index couldn't be found.");
 
         const embed = new MessageEmbed()
-            .setTitle(`Index ${Number(args[0] || captured)}${res.title != null && res.title !== "N / A" ? " - " + res.title : ""}`)
+            .setTitle(`MSNMACM Index ${Number(args[0] || captured)}${res.title != null && res.title !== "N / A" ? " - " + res.title : ""}`)
             .setColor("2f3136")
             .addField(`Abilit${res.abilities.split(",") > 1 ? "ies" : "y"}:`, res.abilities, true)
             .addField("Alliances", res.alliances, true)

@@ -6,6 +6,7 @@ module.exports = {
     name: "load",
     description: "Load a command into the bot process",
     category: "Administrative",
+    usage: "<command|all>",
     args: true,
     aliases: ["l"],
     adminOnly: true,
@@ -43,7 +44,7 @@ module.exports = {
 
             let stop = performance.now();
 
-            return progress.edit(`Done. Loaded ${newCommands} new command${newCommands > 1 ? "s" : ""} in ${(stop - start).toFixed(2)} ms.`);
+            return progress.edit(`Done. Loaded ${newCommands} new command${newCommands > 1 ? "s" : ""} in ${(stop - start).toFixed(2)} ms. It's recommended you run \`s$rebuild_auto\` now.`);
 
         } else {
             let name = client.utils.string.capitalize(args[0]);
@@ -73,7 +74,7 @@ module.exports = {
             cmd.ABSOLUTE_PATH = path;
             client.commands.set(cmd.name, cmd);
 
-            return message.channel.send(`Successfully loaded \`${cmd.name}\`.`);
+            return message.channel.send(`Successfully loaded \`${cmd.name}\`. It's recommended you run \`s$rebuild_auto\` now.`);
         }
     }
 }

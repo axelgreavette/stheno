@@ -1,8 +1,8 @@
 module.exports = {
     name: "eval",
     description: "Load a file within the commands folder",
-    args: false,
-    usage: "[CODE]",
+    args: true,
+    usage: "<code>",
     adminOnly: true,
     category: "Administrative",
     preventDefaultError: true,

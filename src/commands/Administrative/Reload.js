@@ -6,6 +6,7 @@ module.exports = {
     description: "Reload a command within the bot process",
     category: "Administrative",
     args: true,
+    usage: "<command|all>",
     aliases: ["rl"],
     adminOnly: true,
     async execute(message, args, client) {

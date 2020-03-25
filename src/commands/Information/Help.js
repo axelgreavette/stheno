@@ -11,17 +11,15 @@ const categoryDescriptions = {
 module.exports = {
     name: "help",
     description: "Lists all of my commands or information related to a singularity",
-    args: false,
-    usage: "[COMMAND NAME (Optional)]",
+    usage: "<?command|category|args>",
     category: "Information",
+    credits: [
+        {
+            name: "Async",
+            for: "Inspiration"
+        }
+    ],
     execute(message, args, client) {
-        const body = [];
-
-        const DMNotification = new MessageEmbed()
-            .setTitle("Help has been sent to your DMs.")
-            .setThumbnail(client.user.displayAvatarURL())
-            .setColor("2f3136")
-
         if(!args.length) {
             const embed = new MessageEmbed()
                 .setTitle("Command Categories:")
@@ -76,8 +74,15 @@ module.exports = {
                 }).map(c => c.name).join(", ")}\n\nUse \`s$help [CATEGORY]\` to see more information about a specific category.\nUse \`s$help [COMMAND]\` to see more information about a specific command.`)
             
             return message.channel.send(embed);
-            } else {
-                return message.channel.send(`404 requested function (**${name}**) was not found.`);
+        } else if (args[0] == "args" || args[0] == "arguments") {
+            const embed = new MessageEmbed()
+                .setTitle("Help with arguments:")
+                .setColor("2f3136")
+                .setDescription("Some of Stheno's commands use things called arguments. Arguments are the words or symbols that come after a command, and are sometimes used to provide extra options for commands, or user input.\n\nIn the help panel, a command's arguments are explained in the **Usage** section. Usually it looks something like this: \n\nUsage: s$markov <?channel> <?user>\n\nThe arguments for this command are `channel` and `user`. We know this because they're surrounded by `< >`. Notice how they're prefixed with a `?`. This means that they're optional. In the case of the `s$generate` command, if the arguments aren't supplied Stheno defaults to using the channel the command was called it, and the user who called it.\n\nSometimes though, arguments will be shown like this:\n\nUsage: s$msnmacm <query|list>\n\nSee that `|` character? That means that the command will either take a query (number), or `list` for it's arguments.\n\nThat's it! You know everything there is to know about command arguments! Have fun!")
+        
+            return message.channel.send(embed);
+        } else {
+            return message.channel.send(`404 requested function (**${name}**) was not found.`);
         }
     }
 }
