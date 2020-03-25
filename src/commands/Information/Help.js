@@ -38,7 +38,7 @@ module.exports = {
 
             let description = `Name: ${result.name}\nCategory: ${result.category}`;
 
-            if (result.aliases) description += `\nAliases: ${result.aliases.join(', ')}`;
+            if (result.aliases) description += `\nAliases: ${result.aliases.join(", ")}`;
             if (result.description) description += `\nDescription: ${result.description}`;
             if (result.usage) description += `\nUsage: ${client.prefixes.global}${result.name} ${result.usage}`;
 

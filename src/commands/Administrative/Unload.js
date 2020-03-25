@@ -32,9 +32,7 @@ module.exports = {
             let stop = performance.now();
             
             return progress.edit(`Done. Unloaded ${commands.size} command${commands.size > 1 ? "s" : ""} in ${(stop - start).toFixed(2)} ms. It's recommended you run \`s$rebuild_auto\` now.`);
-        } else {
-            let name = client.utils.string.capitalize(args[0]);
-            
+        } else {           
             let command = client.commands.get(args[0]);
 
             if(command.auto) {
@@ -42,7 +40,7 @@ module.exports = {
                 client.autoPatterns = client.autoPatterns.filter(p => !command.patterns.includes(p));
             }
 
-            if (!command) return message.channel.send(`That command couldn't be found within my files. `);
+            if (!command) return message.channel.send("That command couldn't be found within my files.");
 
             client.commands.delete(command.name);
             delete require.cache[require.resolve(`../${command.ABSOLUTE_PATH}`)];

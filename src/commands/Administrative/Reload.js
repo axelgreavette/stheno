@@ -32,9 +32,7 @@ module.exports = {
             let stop = performance.now();
 
             return progress.edit(`Done. Reloaded ${toReload.length} command${toReload.length > 1 ? "s" : ""} in ${(stop - start).toFixed(2)} ms. It's recommended you run \`s$rebuild_auto\` now.`);
-        } else {
-            let name = client.utils.string.capitalize(args[0]);
-            
+        } else {          
             let command = client.commands.get(args[0]);
 
             if (!command) return message.channel.send(`That command couldn't be found within my processes. Try loading it with \`s$load ${args[0]}\``);

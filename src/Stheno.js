@@ -5,7 +5,7 @@ const winston = require("winston");
 const chalk = require("chalk");
 const ms = require("ms");
 
-const escapeRegex = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const escapeRegex = str => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 const client = new sh0danClient();
 
@@ -73,7 +73,7 @@ client.on("message", async message => {
     if (!command) return;
 
     if (command.args && !args.length) {
-        let reply = `No arguments were provided`;
+        let reply = "No arguments were provided"
 
         if (command.usage) reply += `\nThe proper usage of that command is: \`${client.prefix}${command.name} ${command.usage}\``;
 
@@ -114,7 +114,7 @@ client.on("message", async message => {
         if (command.preventDefaultError === true) {
             message.channel.stopTyping();
             return await command.error(message, args, client, error);
-        };
+        }
         logger.log("error", chalk.redBright(error));
         await message.channel.send(client.configs.Messages.Error.STANDARD);
         message.channel.stopTyping();

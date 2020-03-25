@@ -1,0 +1,20 @@
+{
+    "parserOptions": {
+        "ecmaVersion": 8,
+        "sourceType": "script"
+    },
+    "rules": {
+        "semi": "off",
+        "quotes": ["error", "double"],
+        "arrow-spacing": "error",
+        "prefer-arrow-callback": "error",
+        "no-undef": "off",
+        "no-var": "error"
+    },
+    "env": {
+        "es6": true,
+        "node": true
+    },
+    "root": true,
+    "extends": "eslint:recommended"
+}

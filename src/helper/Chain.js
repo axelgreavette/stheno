@@ -28,8 +28,8 @@ class MarkovChain {
         this.order = 3
         this.beginnings = []
         this.lookupTable = {}
-        Object.assign(this, typeof options === 'string' ? JSON.parse(options) : options)
-        this.init(options.source || '')
+        Object.assign(this, typeof options === "string" ? JSON.parse(options) : options)
+        this.init(options.source || "")
     }
 
     /**
@@ -49,14 +49,14 @@ class MarkovChain {
 
     /**
      * Initializes the chain, and instantiates the generator function
-     * You usually don't need to call this manually. It gets called at
+     * You usually don"t need to call this manually. It gets called at
      * class instantiation.
      *
      * @param {String} source
      */
-    init(source = '') {
+    init(source = "") {
         if (!this.beginnings.length && !Object.keys(this.lookupTable).length) {
-            let sources = source.split('\n')
+            let sources = source.split("\n")
             for (let text of sources) {
                 for (let i = 0; i <= text.length - this.order; i++) {
                     let gram = text.substring(i, i + this.order)

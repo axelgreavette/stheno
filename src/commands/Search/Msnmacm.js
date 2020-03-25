@@ -15,7 +15,7 @@ module.exports = {
             url: "https://msnmacm.org"
         }
     ],
-    async execute(message, args, client) {
+    async execute(message, args) {
         const { data: res } = await axios({
             url: `https://msnmacm.org/_${args[0]}`,
             headers: { 
@@ -36,7 +36,7 @@ module.exports = {
 
         return message.channel.send(embed);
     },
-    async executeAuto(message, args, client) {       
+    async executeAuto(message) {       
         let cap = /msnmacm\.org\/_(\d\d?)/i;
         let altcap = /msnmacm:\/\/(\d\d)?/i;
 
@@ -44,7 +44,7 @@ module.exports = {
 
         if(cap.test(message.content)) captured = cap.exec(message.content)[1]
         if(altcap.test(message.content)) captured = altcap.exec(message.content)[1];
-        if(!cap.test(message.content) && !altcap.test(message.content)) return;;
+        if(!cap.test(message.content) && !altcap.test(message.content)) return;
 
         const { data: res } = await axios({
             url: `https://msnmacm.org/_${Number(captured)}`,

@@ -1,6 +1,6 @@
 const { Client, Collection } = require("discord.js");
 const { join } = require("path");
-const { readdirSync, statSync } = require("fs");
+const { readdirSync } = require("fs");
 const { js } = require("js-beautify");
 const NekoClient = require("nekos.life")
 

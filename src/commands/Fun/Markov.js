@@ -10,8 +10,8 @@ module.exports = {
     async execute(message, args, client) {
         const original = await message.channel.send("*Generating...*");
 
-        let chanIndex = args.findIndex(val => /\<#\d+\>/.test(val));
-        let userIndex = args.findIndex(val => /\<@!*\d+\>|./.test(val));
+        let chanIndex = args.findIndex(val => /<#\d+>/.test(val));
+        let userIndex = args.findIndex(val => /<@!*\d+>|./.test(val));
 
         let channel = args[chanIndex] ? message.guild.channels.cache.get(args[chanIndex].replace("<#", "").replace(">", "")) : message.channel;
         let user = args[userIndex] ? client.findMember(message, args[userIndex], true) : message.member;

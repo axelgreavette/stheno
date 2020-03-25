@@ -27,10 +27,11 @@ module.exports = {
         const embed = new MessageEmbed()
             .setTitle("Debug for Stheno:")
             .setColor("2f3136")
+            .addField("Web:", "Inactive")
             .addField("Prefixes:", `${prefixes.map(p => `${client.utils.string.capitalize(p[0])}: ${p[1]}`)}`)
             .addField("Commands:", `Loaded: ${client.commands.size}\nAvailable: ${availableCommands}`)
             .addField("Auto:", `Loaded: ${client.autoCommands.size}\nPatterns: ${client.autoPatterns.map(p => `\`${p}\``).join(", ")}`)
-            .addField("Permissions:",)
+            .addField("Permissions:", `Add Reactions: ${message.guild.me.hasPermission("ADD_REACTIONS")}\nManage Messages: ${message.guild.me.hasPermission("MANAGE_MESSAGES")}\nRead Messages: ${message.guild.me.hasPermission("VIEW_CHANNEL")}\nRead Message History: ${message.guild.me.hasPermission("READ_MESSAGE_HISTORY")}\nSend Messages: ${message.guild.me.hasPermission("SEND_MESSAGES")}`)
 
         return message.channel.send(embed);
     }
