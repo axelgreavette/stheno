@@ -14,7 +14,7 @@
     <ul style="list-style-type: decimal">
         <li>To be blazing fast :dash:</li>
         <li>To be multifunctional, and to preform each one with flying colours</li>
-    <ul>
+    </ul>
 </p>
 
 <h1>Setup</h1>
