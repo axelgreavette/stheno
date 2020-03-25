@@ -35,4 +35,4 @@ module.exports = {
 
         return original.edit(`> ${generator.generate()}\n*Generated from ~${inputs.size} of ${user.displayName}'s messages in ${channel}*`);
     }
-}
+};

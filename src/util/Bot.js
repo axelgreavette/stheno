@@ -47,7 +47,7 @@ function uptime() {
  * Scrapes a supplied directory and returns recursive directories and files within.
  * @param {File Path} srcPath The directory to scrape.
  */
-const getDirectories = srcPath => readdirSync(srcPath).filter(file => statSync(join(srcPath, file)).isDirectory())
+const getDirectories = srcPath => readdirSync(srcPath).filter(file => statSync(join(srcPath, file)).isDirectory());
 
 /**
  * Converts a Discord snowflake to a valid timestamp.
@@ -59,4 +59,4 @@ module.exports = {
     uptime,
     getDirectories,
     snowflake
-}
+};

@@ -1,5 +1,5 @@
 const { join } = require("path");
-const { performance } = require("perf_hooks")
+const { performance } = require("perf_hooks");
 
 module.exports = {
     name: "reload",
@@ -50,4 +50,4 @@ module.exports = {
             return message.channel.send(`Successfully reloaded \`${cmd.name}\`. It's recommended you run \`s$rebuild_auto\` now.`);
         }
     }
-}
+};

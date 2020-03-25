@@ -1,6 +1,6 @@
 const { join } = require("path");
 const { readdirSync } = require("fs");
-const { performance } = require("perf_hooks")
+const { performance } = require("perf_hooks");
 
 module.exports = {
     name: "load",
@@ -50,7 +50,7 @@ module.exports = {
             let name = client.utils.string.capitalize(args[0]);
             let Commands = [];
 
-            if(client.commands.get(args[0])) return message.channel.send("That command has already been loaded.")
+            if(client.commands.get(args[0])) return message.channel.send("That command has already been loaded.");
 
             client.utils.bot.getDirectories(join(__dirname, "..")).forEach(d => {
                 let commands = readdirSync(join(__dirname, "..", d)).filter(file => file.endsWith(".js")).map(path => `${d}/${path}`);
@@ -77,4 +77,4 @@ module.exports = {
             return message.channel.send(`Successfully loaded \`${cmd.name}\`. It's recommended you run \`s$rebuild_auto\` now.`);
         }
     }
-}
+};

@@ -1,4 +1,4 @@
-const { performance } = require("perf_hooks")
+const { performance } = require("perf_hooks");
 
 module.exports = {
     name: "rebuild_auto",
@@ -36,4 +36,4 @@ module.exports = {
 
         progress.edit(`Done. Rebuilt ${patterns.length} patterns and ${autos.size} commands in ${(end - start).toFixed(2)} ms.`);
     }
-}
+};

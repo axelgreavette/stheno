@@ -19,6 +19,6 @@ module.exports = {
         }
     },
     async error(message, args, client, error) {
-        return message.channel.send(`\`ERROR\` \`\`\`xl\n${client.clean(error)}\n\`\`\``)
+        return message.channel.send(`\`ERROR\` \`\`\`xl\n${client.clean(error)}\n\`\`\``);
     }
-}
+};

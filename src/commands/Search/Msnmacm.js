@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { MessageEmbed } = require("discord.js")
+const { MessageEmbed } = require("discord.js");
 
 module.exports = {
     name: "msnmacm",
@@ -32,7 +32,7 @@ module.exports = {
             .addField("Alliances", res.alliances, true)
             .addField("Last Known Location:", res.last_location != "undefined" ? res.last_location : "Unknown", true)
             .setDescription(`**Desc.**: ${res.abilities_description}\n\n**Notes**: ${res.notes}`)
-            .setFooter("msnmacm.org")
+            .setFooter("msnmacm.org");
 
         return message.channel.send(embed);
     },
@@ -42,7 +42,7 @@ module.exports = {
 
         let captured;
 
-        if(cap.test(message.content)) captured = cap.exec(message.content)[1]
+        if(cap.test(message.content)) captured = cap.exec(message.content)[1];
         if(altcap.test(message.content)) captured = altcap.exec(message.content)[1];
         if(!cap.test(message.content) && !altcap.test(message.content)) return;
 
@@ -62,8 +62,8 @@ module.exports = {
             .addField("Alliances", res.alliances, true)
             .addField("Last Known Location:", res.last_location != "undefined" ? res.last_location : "Unknown", true)
             .setDescription(`**Desc.**: ${res.abilities_description}\n\n**Notes**: ${res.notes}`)
-            .setFooter("msnmacm.org")
+            .setFooter("msnmacm.org");
 
         return message.channel.send(embed);
     }
-}
+};

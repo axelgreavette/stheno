@@ -24,4 +24,4 @@ function trimArray(arr, maxLen = 10) {
 module.exports = {
     randomItem,
     trimArray
-}
+};

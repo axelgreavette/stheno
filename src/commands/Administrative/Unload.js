@@ -1,4 +1,4 @@
-const { performance } = require("perf_hooks")
+const { performance } = require("perf_hooks");
 
 module.exports = {
     name: "unload",
@@ -20,7 +20,7 @@ module.exports = {
                 if(c.category == "Administrative") return;
 
                 delete require.cache[require.resolve(`../${c.ABSOLUTE_PATH}`)];
-                progress.edit(`Removed \`${c.name}\` from require cache...`)
+                progress.edit(`Removed \`${c.name}\` from require cache...`);
             });
             
             progress.edit("Sweeping commands...");
@@ -48,4 +48,4 @@ module.exports = {
             return message.channel.send(`Successfully unloaded \`${command.name}\`. It's recommended you run \`s$rebuild_auto\` now.`);
         }
     }
-}
+};

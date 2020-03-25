@@ -28,7 +28,7 @@ module.exports = {
 			.addField("TOML:", `${formatNumber(cloc.TOML.code)} lines over ${cloc.TOML.nFiles} files.`)
 			.addField("Markdown:", `${formatNumber(cloc.Markdown.code)} lines over ${cloc.Markdown.nFiles} files.`)
 			.addField("Total:", formatNumber(cloc.SUM.code))
-            .setFooter(`${cloc.header.cloc_url} v${cloc.header.cloc_version}`)
+            .setFooter(`${cloc.header.cloc_url} v${cloc.header.cloc_version}`);
             
 		return message.channel.send(embed);
 	},

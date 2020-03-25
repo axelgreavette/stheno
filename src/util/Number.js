@@ -4,4 +4,4 @@ function formatNumber(number) {
 
 module.exports = {
     formatNumber
-}
+};

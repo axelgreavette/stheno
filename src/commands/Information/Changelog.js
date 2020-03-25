@@ -26,8 +26,8 @@ module.exports = {
                     return `${hash} - ${commit.author.login} - ${client.utils.string.shorten(commit.commit.message.split("\n")[0], 50)}`;
                 }).join("\n")
             )
-            .setFooter(`Code last updated ${new Date(commits[0].commit.author.date).toLocaleDateString("en-CA", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}`)
+            .setFooter(`Code last updated ${new Date(commits[0].commit.author.date).toLocaleDateString("en-CA", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}`);
 
         return message.channel.send(embed);
     }
-}
+};

@@ -73,7 +73,7 @@ client.on("message", async message => {
     if (!command) return;
 
     if (command.args && !args.length) {
-        let reply = "No arguments were provided"
+        let reply = "No arguments were provided";
 
         if (command.usage) reply += `\nThe proper usage of that command is: \`${client.prefix}${command.name} ${command.usage}\``;
 
@@ -81,8 +81,8 @@ client.on("message", async message => {
         return;
     }
 
-    if (command.guildOnly && message.channel.type !== "text") return message.channel.send(client.configs.Messages.Error.GUILD_ONLY);
-    if (command.disabled && !client.configs.Public.bot.admins.includes(message.author.id)) return message.channel.send(client.configs.Messages.Error.DISABLED);
+    if (command.guildOnly && message.channel.type !== "text") return message.channel.send(client.configs.Translations.English.Error.GUILD_ONLY);
+    if (command.disabled && !client.configs.Public.bot.admins.includes(message.author.id)) return message.channel.send(client.configs.Translations.English.Error.DISABLED);
     if (command.adminOnly && !client.configs.Public.bot.admins.includes(message.author.id)) return message.channel.send(`Unfortunately ${message.author} you lack the required clearance level for this command. Try contacting a system administrator for further assistance`);
 
     if (!client.cooldowns.has(command.name)) {
@@ -116,7 +116,7 @@ client.on("message", async message => {
             return await command.error(message, args, client, error);
         }
         logger.log("error", chalk.redBright(error));
-        await message.channel.send(client.configs.Messages.Error.STANDARD);
+        await message.channel.send(client.configs.Translations.English.Error.STANDARD);
         message.channel.stopTyping();
     }
 });

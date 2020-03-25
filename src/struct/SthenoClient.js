@@ -2,7 +2,7 @@ const { Client, Collection } = require("discord.js");
 const { join } = require("path");
 const { readdirSync } = require("fs");
 const { js } = require("js-beautify");
-const NekoClient = require("nekos.life")
+const NekoClient = require("nekos.life");
 
 const Config = require("../helper/Config");
 
@@ -23,9 +23,9 @@ class SthenoClient extends Client {
             Confidential: new Config(join(__dirname, "..", "config", "Confidential.toml")),
             Public: new Config(join(__dirname, "..", "config", "Public.toml")),
             Categories: new Config(join(__dirname, "..", "config", "Categories.toml")),
-            Messages: new Config(join(__dirname, "..", "config", "Messages.toml")),
+            Translations: new Config(join(__dirname, "..", "config", "Translations.toml")),
             Presences: new Config(join(__dirname, "..", "config", "Presences.toml"))
-        }
+        };
 
         this.utils = {
             string: StringUtils,
@@ -39,7 +39,7 @@ class SthenoClient extends Client {
         this.autoCommands = new Collection();
         this.autoPatterns = [];
         this.cooldowns = new Collection();
-        let Commands = []
+        let Commands = [];
 
         this.utils.bot.getDirectories(this.commandsFolder).forEach(d => {
             let commands = readdirSync(join(this.commandsFolder, d)).filter(file => file.endsWith(".js")).map(path => `${d}/${path}`);

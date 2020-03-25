@@ -38,8 +38,8 @@ module.exports = {
             .addField("Created:", format(new Date(res.time.created), "dd/mm/yyyy"), true)
             .addField("Modified:", format(new Date(res.time.modified), "dd/mm/yyyy"), true)
             .addField("Dependencies:", dependencies.join(", ") || "None", false)
-            .addField("Maintainers:", maintainers.join(", "), false)
+            .addField("Maintainers:", maintainers.join(", "), false);
 
         return message.channel.send(embed);
     }
-}
+};

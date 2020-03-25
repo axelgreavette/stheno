@@ -16,4 +16,4 @@ capitalize = toReplace => toReplace.replace(/^\w/, c => c.toUpperCase());
 module.exports = {
     shorten,
     capitalize
-}
+};

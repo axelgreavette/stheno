@@ -24,12 +24,12 @@ class MarkovChain {
      * @param {Object} options.lookupTable Lookup table for the chain.
      */
     constructor(options = {}) {
-        this.max = 20
-        this.order = 3
-        this.beginnings = []
-        this.lookupTable = {}
-        Object.assign(this, typeof options === "string" ? JSON.parse(options) : options)
-        this.init(options.source || "")
+        this.max = 20;
+        this.order = 3;
+        this.beginnings = [];
+        this.lookupTable = {};
+        Object.assign(this, typeof options === "string" ? JSON.parse(options) : options);
+        this.init(options.source || "");
     }
 
     /**
@@ -44,7 +44,7 @@ class MarkovChain {
             order: this.order,
             beginnings: this.beginnings.slice(),
             lookupTable: JSON.parse(JSON.stringify(this.lookupTable))
-        })
+        });
     }
 
     /**
@@ -56,21 +56,21 @@ class MarkovChain {
      */
     init(source = "") {
         if (!this.beginnings.length && !Object.keys(this.lookupTable).length) {
-            let sources = source.split("\n")
+            let sources = source.split("\n");
             for (let text of sources) {
                 for (let i = 0; i <= text.length - this.order; i++) {
-                    let gram = text.substring(i, i + this.order)
+                    let gram = text.substring(i, i + this.order);
                     if (i === 0) {
-                        this.beginnings.push(gram)
+                        this.beginnings.push(gram);
                     }
                     if (!this.lookupTable[gram]) {
-                        this.lookupTable[gram] = []
+                        this.lookupTable[gram] = [];
                     }
-                    this.lookupTable[gram].push(text.charAt(i + this.order))
+                    this.lookupTable[gram].push(text.charAt(i + this.order));
                 }
             }
         }
-        this._generator = this.iterator(this.max)
+        this._generator = this.iterator(this.max);
     }
 
     /**
@@ -79,7 +79,7 @@ class MarkovChain {
      * @return {String}
      */
     generate() {
-        return this._generator.next().value
+        return this._generator.next().value;
     }
 
     /**
@@ -90,20 +90,20 @@ class MarkovChain {
      */
     * iterator() {
         while (1) {
-            let gram = this.beginnings[Math.floor(Math.random() * this.beginnings.length)]
-            let output = gram
+            let gram = this.beginnings[Math.floor(Math.random() * this.beginnings.length)];
+            let output = gram;
             for (let i = 0; i < this.max; i++) {
-                let options = this.lookupTable[gram]
+                let options = this.lookupTable[gram];
                 if (!options) {
-                    break
+                    break;
                 }
-                let next = options[Math.floor(Math.random() * options.length)]
-                output += next
-                gram = output.substring(output.length - this.order, output.length)
+                let next = options[Math.floor(Math.random() * options.length)];
+                output += next;
+                gram = output.substring(output.length - this.order, output.length);
             }
-            yield output
+            yield output;
         }
     }
 }
 
-module.exports = MarkovChain
+module.exports = MarkovChain;
