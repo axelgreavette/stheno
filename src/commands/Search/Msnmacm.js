@@ -8,6 +8,7 @@ module.exports = {
     auto: true,
     usage: "<query|list>",
     patterns: [/https?:\/\/msnmacm\.org\/_\d\d?/i, /msnmacm\.org\/_\d\d?/i, /msnmacm:\/\/\d\d?/i],
+    allCaps: true,
     credits: [
         {
             name: "Bakira",

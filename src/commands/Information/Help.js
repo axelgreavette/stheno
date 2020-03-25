@@ -25,7 +25,7 @@ module.exports = {
                 .setTitle("Command Categories:")
                 .setColor("2f3136")
                 .setDescription(client.configs.Categories.Valid.map(c => `≫ ${client.utils.string.capitalize(c.toLowerCase())}`).join("\n"))
-                .setFooter("Use s$help [CATEGORY] to see more information about a category, and the commands that fall into it.");
+                .setFooter("Use s$help <command> to see more information about a category, and the commands that fall into it.");
 
             return message.channel.send(embed);
         }
@@ -55,7 +55,10 @@ module.exports = {
             let cmds = client.commands.filter(c => {
                 if(c.category == result && (!c.disabled || !c.hidden || !c.adminOnly)) return true;
                 else return false;
-            }).map(c => client.utils.string.capitalize(c.name));
+            }).map(c => {
+                if(c.allCaps === true) return c.name.toUpperCase();
+                else return client.utils.string.capitalize(c.name);
+            });
 
             const embed = new MessageEmbed()
                 .setDescription(`${categoryDescriptions[result.toLowerCase()]}`)
@@ -71,7 +74,7 @@ module.exports = {
                 .setDescription(`${client.commands.filter(cmd => {
                     if(cmd.adminOnly || cmd.disabled || cmd.hidden) return false;
                     else return true;
-                }).map(c => c.name).join(", ")}\n\nUse \`s$help [CATEGORY]\` to see more information about a specific category.\nUse \`s$help [COMMAND]\` to see more information about a specific command.`);
+                }).map(c => c.name).join(", ")}\n\nUse \`s$help <category>\` to see more information about a specific category.\nUse \`s$help <command>\` to see more information about a specific command.`);
             
             return message.channel.send(embed);
         } else if (args[0] == "args" || args[0] == "arguments") {

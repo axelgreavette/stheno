@@ -1,5 +1,6 @@
 const { MessageEmbed } = require("discord.js");
 const axios = require("axios");
+const { format } = require("date-fns");
 
 module.exports = {
     name: "info",
@@ -21,9 +22,10 @@ module.exports = {
             .setColor("2f3136")
             .addField("Created by:", "[Axel Greavette](https://b.axelg.xyz)", true)
             .addField("Programmed with:", "<:JS:691370643886702725>  <:DiscordJS:691370753836449834>  <:TOML:691370861294387220>", true)
-            .addField("Links:", `Stheno"s source-code is available on [GitHub](https://github.com/axelgreavette/stheno).${message.guild.ownerID == message.author.id ? "" : "\nYou can invite Stheno to your server [here](" + client.InviteURL + ")."}`)
-            .setFooter(`Code last updated ${new Date(updated[0].commit.author.date).toLocaleDateString("en-CA", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}`);
+            .addField("License:", "GNU General Public v3", true)
+            .addField("Links:", `Stheno's source-code is available on [GitHub](https://github.com/axelgreavette/stheno).${message.guild.ownerID == message.author.id ? "" : "\nYou can invite Stheno to your server [here](" + client.InviteURL + ")."}`)
+            .setFooter(`Code last updated ${format(new Date(updated[0].commit.author.date), "EEEE, MMMM dd, yyyy")}.`);
 
-        return message.channel.send(embed);
+            return message.channel.send(embed);
     }
 };

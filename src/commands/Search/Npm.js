@@ -8,6 +8,7 @@ module.exports = {
     category: "Search",
     args: true,
     usage: "<package>",
+    allCaps: true,
     async execute(message, args, client) {
         let search = args.join(" ");
         let notFound = false;
