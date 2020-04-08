@@ -24,7 +24,7 @@ module.exports = {
             toReload.forEach(c => {
                 delete require.cache[require.resolve(`../${c.ABSOLUTE_PATH}`)];
                 const cmd = require(`../${c.ABSOLUTE_PATH}`);
-                if (!client.configs.Categories.Valid.includes(cmd.category.toUpperCase())) return message.channel.send(`${cmd.name}'s category must match one of ${client.configs.Categories.Valid}. Got ${cmd.category} instead.`);
+                if(!client.configs.rawCategories.Valid.includes(cmd.category.toUpperCase())) return message.channel.send(`${cmd.name}'s category must match one of ${client.configs.rawCategories.Valid}. Got ${cmd.category} instead.`);
                 cmd.ABSOLUTE_PATH = c.ABSOLUTE_PATH;
                 client.commands.set(cmd.name, cmd);
             });
@@ -40,9 +40,9 @@ module.exports = {
             delete require.cache[require.resolve(`../${command.ABSOLUTE_PATH}`)];
             client.commands.delete(command.name);
 
-            const cmd = require(join(client.commandsFolder, `${command.ABSOLUTE_PATH}`));
+            const cmd = require(join(client.commandPath, `${command.ABSOLUTE_PATH}`));
 
-            if (!client.configs.Categories.Valid.includes(cmd.category.toUpperCase())) return message.channel.send(`${cmd.name}'s category must match one of ${client.configs.Categories.Valid}. Got ${cmd.category} instead.`);
+            if(!client.configs.rawCategories.Valid.includes(cmd.category.toUpperCase())) return message.channel.send(`${cmd.name}'s category must match one of ${client.configs.rawCategories.Valid}. Got ${cmd.category} instead.`);
 
             cmd.ABSOLUTE_PATH = command.ABSOLUTE_PATH;
             client.commands.set(cmd.name, cmd);

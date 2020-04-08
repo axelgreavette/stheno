@@ -24,7 +24,7 @@ module.exports = {
             const embed = new MessageEmbed()
                 .setTitle("Command Categories:")
                 .setColor("2f3136")
-                .setDescription(client.configs.Categories.Valid.map(c => `≫ ${client.utils.string.capitalize(c.toLowerCase())}`).join("\n"))
+                .setDescription(client.configs.rawCategories.Valid.map(c => `≫ ${client.utils.string.capitalize(c.toLowerCase())}`).concat(["≫ All"]).sort().join("\n"))
                 .setFooter("Use s$help <command> to see more information about a category, and the commands that fall into it.");
 
             return message.channel.send(embed);
@@ -33,7 +33,7 @@ module.exports = {
         const name = args[0].toLowerCase();
         let result;
 
-        if(!client.configs.Categories.Valid.includes(args[0].toUpperCase()) && client.commands.get(name) || !client.configs.Categories.Valid.includes(args[0].toUpperCase()) && client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(name))) {
+        if(!client.configs.rawCategories.Valid.includes(args[0].toUpperCase()) && client.commands.get(name) || !client.configs.rawCategories.Valid.includes(args[0].toUpperCase()) && client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(name))) {
             result = client.commands.get(name) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(name));
 
             let description = `Name: ${result.name}\nCategory: ${result.category}`;
@@ -49,7 +49,7 @@ module.exports = {
                 .setColor("2f3136");
 
             return message.channel.send(embed);
-        } else if(client.configs.Categories.Valid.includes(args[0].toUpperCase())) {
+        } else if(client.configs.rawCategories.Valid.includes(args[0].toUpperCase())) {
             result = client.utils.string.capitalize(args[0]);
 
             let cmds = client.commands.filter(c => {

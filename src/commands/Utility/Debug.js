@@ -22,7 +22,6 @@ module.exports = {
         });
 
         let availableCommands = allCommands.length - client.commands.size;
-
         
         const embed = new MessageEmbed()
             .setTitle("Debug for Stheno:")
